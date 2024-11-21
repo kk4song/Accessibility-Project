@@ -1,21 +1,14 @@
-// Create a <link> element to apply the content.css styles
-var link = document.createElement("link");
-link.rel = "stylesheet";
-link.type = "text/css";
-link.href = chrome.runtime.getURL("content.css");
-document.head.appendChild(link);
-
 // Function to create the magnifier effect
-function magnify(imgID, zoom) {
-    var img = imgID;  // imgID is now directly the image element, not the ID
-    if (!img) {
-        console.error("Image not found.");
-        return;
-    }
+function magnify(img, zoom) {
+    // Check if the magnifier already exists for this image
+    if (img.hasAttribute('data-magnified')) return;  // Prevent multiple magnifiers for the same image
 
     var glass = document.createElement("div");
     glass.setAttribute("class", "img-magnifier-glass");
     img.parentElement.insertBefore(glass, img);
+
+    // Mark the image as having a magnifier
+    img.setAttribute('data-magnified', 'true');
 
     glass.style.backgroundImage = "url('" + img.src + "')";
     glass.style.backgroundRepeat = "no-repeat";
@@ -24,6 +17,15 @@ function magnify(imgID, zoom) {
     var bw = 3;
     var w = glass.offsetWidth / 2;
     var h = glass.offsetHeight / 2;
+
+    // Show the magnifier only when the user hovers over the image
+    img.addEventListener("mouseenter", function() {
+        glass.style.display = "block";
+    });
+
+    img.addEventListener("mouseleave", function() {
+        glass.style.display = "none";
+    });
 
     glass.addEventListener("mousemove", moveMagnifier);
     img.addEventListener("mousemove", moveMagnifier);
@@ -57,7 +59,7 @@ function magnify(imgID, zoom) {
     }
 }
 
-// Automatically apply magnifier to all images on the page
+// Automatically apply magnifier to all images on the page when the extension runs
 var images = document.querySelectorAll("img");
 
 images.forEach(function(img) {
