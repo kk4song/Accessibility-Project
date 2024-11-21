@@ -5,10 +5,15 @@ link.type = "text/css";
 link.href = chrome.runtime.getURL("content.css");
 document.head.appendChild(link);
 
+// Function to create the magnifier effect
 function magnify(imgID, zoom) {
-    var img, glass, w, h, bw;
-    img = document.getElementById(imgID);
-    glass = document.createElement("div");
+    var img = imgID;  // imgID is now directly the image element, not the ID
+    if (!img) {
+        console.error("Image not found.");
+        return;
+    }
+
+    var glass = document.createElement("div");
     glass.setAttribute("class", "img-magnifier-glass");
     img.parentElement.insertBefore(glass, img);
 
@@ -16,23 +21,20 @@ function magnify(imgID, zoom) {
     glass.style.backgroundRepeat = "no-repeat";
     glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
 
-    bw = 3;
-    w = glass.offsetWidth / 2;
-    h = glass.offsetHeight / 2;
+    var bw = 3;
+    var w = glass.offsetWidth / 2;
+    var h = glass.offsetHeight / 2;
 
     glass.addEventListener("mousemove", moveMagnifier);
     img.addEventListener("mousemove", moveMagnifier);
-
     glass.addEventListener("touchmove", moveMagnifier);
     img.addEventListener("touchmove", moveMagnifier);
 
     function moveMagnifier(e) {
-        var pos, x, y;
-
         e.preventDefault();
-        pos = getCursorPos(e);
-        x = pos.x;
-        y = pos.y;
+        var pos = getCursorPos(e);
+        var x = pos.x;
+        var y = pos.y;
 
         if (x > img.width - (w / zoom)) { x = img.width - (w / zoom); }
         if (x < w / zoom) { x = w / zoom; }
@@ -54,8 +56,6 @@ function magnify(imgID, zoom) {
         return { x: x, y: y };
     }
 }
-
-magnify("myimage", 3);
 
 // Automatically apply magnifier to all images on the page
 var images = document.querySelectorAll("img");
