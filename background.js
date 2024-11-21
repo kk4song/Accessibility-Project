@@ -1,3 +1,7 @@
-chrome.runtime.onInstalled.addListener(() => {
-    console.log("Accessibility Project is installed and background worker is active.");
-});
+chrome.action.onClicked.addListener((tab) => {
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      files: ["content.js"]
+    });
+  });
+  
