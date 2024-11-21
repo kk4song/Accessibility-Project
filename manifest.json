@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Universal Image Magnifier",
+    "name": "Accessibility Project",
     "version": "1.0",
     "description": "Magnify any image on your browser with a circular zoom lens.",
     "permissions": ["activeTab"],
