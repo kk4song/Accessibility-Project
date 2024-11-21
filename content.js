@@ -1,3 +1,11 @@
+// Create a <link> element to apply the content.css styles
+var link = document.createElement("link");
+link.rel = "stylesheet";
+link.type = "text/css";
+link.href = chrome.runtime.getURL("content.css");
+document.head.appendChild(link);
+
+// Function to create the magnifier effect
 function magnify(imgID, zoom) {
     var img, glass, w, h, bw;
     img = document.getElementById(imgID);
@@ -49,3 +57,5 @@ function magnify(imgID, zoom) {
 }
 
 magnify("myimage", 3);
+
+
