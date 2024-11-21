@@ -1,0 +1,15 @@
+{
+    "manifest_version": 3,
+    "name": "Universal Image Magnifier",
+    "version": "1.0",
+    "description": "Magnify any image on your browser with a circular zoom lens.",
+    "permissions": ["activeTab"],
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["magnifier.js", "content.js"],
+        "css": ["styles.css"]
+      }
+    ]
+  }
+  
