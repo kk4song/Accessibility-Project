@@ -1,15 +1,23 @@
 {
     "manifest_version": 3,
-    "name": "Universal Image Magnifier",
+    "name": "Accessibility Project",
     "version": "1.0",
-    "description": "Magnify any image on your browser with a circular zoom lens.",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icon16.png",
+            "48": "icon48.png",
+            "128": "icon128.png"
+        }
+    },
     "permissions": ["activeTab"],
     "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["magnifier.js", "content.js"],
-        "css": ["styles.css"]
-      }
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
+        }
     ]
-  }
-  
+}
