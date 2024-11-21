@@ -5,7 +5,6 @@ link.type = "text/css";
 link.href = chrome.runtime.getURL("content.css");
 document.head.appendChild(link);
 
-// Function to create the magnifier effect
 function magnify(imgID, zoom) {
     var img, glass, w, h, bw;
     img = document.getElementById(imgID);
@@ -58,4 +57,9 @@ function magnify(imgID, zoom) {
 
 magnify("myimage", 3);
 
+// Automatically apply magnifier to all images on the page
+var images = document.querySelectorAll("img");
 
+images.forEach(function(img) {
+    magnify(img, 3);  // 3 is the zoom level, adjust as needed
+});
